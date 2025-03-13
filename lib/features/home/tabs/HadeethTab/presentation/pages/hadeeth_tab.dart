@@ -31,7 +31,8 @@ class _HadeethTabState extends State<HadeethTab> {
                 image: DecorationImage(image: AssetImage(AppAssets.hadeethFrame)),
               ),
               child: hadeethList.isEmpty?
-              CircularProgressIndicator():Text(hadeethList[itemIndex].title)
+              Center(child: CircularProgressIndicator(color: AppColors.primaryColor))
+                  :Text(hadeethList[itemIndex].title,style: AppStyles.bold20PrimaryDark)
             ),
       )
     );
