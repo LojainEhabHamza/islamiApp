@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:islami/config/app_routes.dart';
 import 'package:islami/core/utils/app_assets.dart';
 import 'package:islami/core/utils/app_colors.dart';
 import 'package:islami/core/utils/app_styles.dart';
@@ -21,20 +22,49 @@ class _HadeethTabState extends State<HadeethTab> {
     if(hadeethList.isEmpty){
       loadHadeethFiles();
     }
-    return Container(
-      child: CarouselSlider.builder(
-        options: CarouselOptions(),
-        itemCount: hadeethList.length,
-        itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) =>
-            Container(
-              decoration:BoxDecoration(
-                image: DecorationImage(image: AssetImage(AppAssets.hadeethFrame)),
-              ),
-              child: hadeethList.isEmpty?
-              Center(child: CircularProgressIndicator(color: AppColors.primaryColor))
-                  :Text(hadeethList[itemIndex].title,style: AppStyles.bold20PrimaryDark)
+    return Column(
+      children: [
+        Padding(
+          padding: EdgeInsets.only(top: height*0.02),
+          child: Center(child: Image.asset(AppAssets.islamiLogo,height: height*0.25)),
+        ),
+        hadeethList.isEmpty?
+        Center(child: CircularProgressIndicator(color: AppColors.primaryColor))
+        :CarouselSlider.builder(
+            options: CarouselOptions(
+              height: height*0.6,
+              viewportFraction: 0.65,
+              enlargeCenterPage: true,
+              enableInfiniteScroll: true
             ),
-      )
+            itemCount: hadeethList.length,
+            itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) =>
+                InkWell(
+                onTap: (){
+                    Navigator.of(context).pushNamed(AppRoutes.hadeethDetailsRoute,arguments: hadeethList[itemIndex]);
+                },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: width*0.02,vertical: height*0.02),
+                    decoration:BoxDecoration(
+                      color: AppColors.primaryColor,
+                      borderRadius: BorderRadius.circular(16),
+                      image: DecorationImage(image: AssetImage(AppAssets.hadeethFrame),fit: BoxFit.fill),
+                    ),
+                    child: Column(
+                      children: [
+                        Text(hadeethList[itemIndex].title,style: AppStyles.bold20PrimaryDark,textAlign: TextAlign.center),
+                        Expanded(
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: width*0.02,vertical: height*0.01),
+                              child: Text(hadeethList[itemIndex].content.join(''),style: AppStyles.bold16PrimaryDark,textAlign: TextAlign.center),
+                            )
+                        )
+                      ],
+                    )
+                  ),
+                ),
+          ),
+      ],
     );
   }
 
