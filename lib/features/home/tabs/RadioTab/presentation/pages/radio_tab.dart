@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:islami/core/api/api_manager/api_manager.dart';
 import 'package:islami/core/utils/app_assets.dart';
 import 'package:islami/core/utils/app_colors.dart';
+import 'package:islami/core/utils/app_strings.dart';
 import 'package:islami/core/utils/app_styles.dart';
+import 'package:islami/features/home/tabs/RadioTab/data/models/RadioResponseModel.dart';
+import 'package:islami/features/home/tabs/RadioTab/data/models/RecitersResponseModel.dart';
 import 'package:islami/features/home/tabs/RadioTab/presentation/widgets/radio_item.dart';
 import 'package:islami/features/home/tabs/RadioTab/presentation/widgets/reciters_item.dart';
 
-class RadioTab extends StatelessWidget {
+class RadioTab extends StatefulWidget {
   const RadioTab({super.key});
 
+  @override
+  State<RadioTab> createState() => _RadioTabState();
+}
+
+class _RadioTabState extends State<RadioTab> {
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
@@ -54,24 +63,72 @@ class RadioTab extends StatelessWidget {
                   Expanded(
                     child: TabBarView(
                       children: [
-                        ListView.separated(
-                            separatorBuilder: (context,index) {
-                              return SizedBox(height: height*0.02);
-                            },
-                            itemBuilder: (context, index) {
-                              return RadioItem();
-                            },
-                            itemCount: 20
-                        ),
-                        ListView.separated(
-                            separatorBuilder: (context,index) {
-                              return SizedBox(height: height*0.02);
-                            },
-                            itemBuilder: (context, index) {
-                              return RecitersItem();
-                            },
-                            itemCount: 20
-                        ),
+                        FutureBuilder<RadioResponseModel>(
+                            future: ApiManager.getRadioData(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return Center(
+                                    child: CircularProgressIndicator(
+                                        color: AppColors.primaryColor));
+                              } else if (snapshot.hasError) {
+                                return Column(
+                                  children: [
+                                    Text(AppStrings.sthWentWrong,
+                                        style: AppStyles.bold20Primary),
+                                    TextButton(
+                                        onPressed: () {
+                                          ApiManager.getRadioData();
+                                          setState(() {});
+                                        },
+                                        child: Text(AppStrings.tryAgain,
+                                            style: AppStyles.bold20Primary))
+                                  ],
+                                );
+                              }
+                              RadioResponseModel data = snapshot.data!;
+                              return ListView.separated(
+                                  separatorBuilder: (context, index) {
+                                    return SizedBox(height: height * 0.02);
+                                  },
+                                  itemBuilder: (context, index) {
+                                    return RadioItem(name: data.radios![index].name??'', url: data.radios![index].url??'');
+                                  },
+                                  itemCount: data.radios!.length);
+                            }),
+                        FutureBuilder<RecitersResponseModel>(
+                            future: ApiManager.getRecitersData(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return Center(
+                                    child: CircularProgressIndicator(
+                                        color: AppColors.primaryColor));
+                              } else if (snapshot.hasError) {
+                                return Column(
+                                  children: [
+                                    Text(AppStrings.sthWentWrong,
+                                        style: AppStyles.bold20Primary),
+                                    TextButton(
+                                        onPressed: () {
+                                          ApiManager.getRecitersData();
+                                          setState(() {});
+                                        },
+                                        child: Text(AppStrings.tryAgain,
+                                            style: AppStyles.bold20Primary))
+                                  ],
+                                );
+                              }
+                              RecitersResponseModel data = snapshot.data!;
+                              return ListView.separated(
+                                  separatorBuilder: (context, index) {
+                                    return SizedBox(height: height * 0.02);
+                                  },
+                                  itemBuilder: (context, index) {
+                                    return RecitersItem();
+                                  },
+                                  itemCount: data.reciters!.length);
+                            }),
                       ],
                     ),
                   ),

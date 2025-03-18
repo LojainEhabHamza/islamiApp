@@ -4,15 +4,16 @@ import 'package:islami/core/utils/app_colors.dart';
 import 'package:islami/core/utils/app_styles.dart';
 
 class RadioItem extends StatefulWidget {
+  String name;
+  String url;
+  RadioItem({required this.name, required this.url});
   @override
   State<RadioItem> createState() => _RadioItemState();
 }
 
 class _RadioItemState extends State<RadioItem> {
   bool isFavorite = false;
-
   bool isPlay = true;
-
   bool isVolumeUp = true;
 
   @override
@@ -40,7 +41,7 @@ class _RadioItemState extends State<RadioItem> {
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Text('Radio Ibrahim Al-Akdar',
+              Text(widget.name,
                   style: AppStyles.bold20PrimaryDark),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

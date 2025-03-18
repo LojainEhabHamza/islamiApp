@@ -11,5 +11,6 @@ class AppStrings{
   static const String description3 = 'Read, and your Lord is the Most Generous';
   static const String description4 = 'Praise the name of your Lord, the Most High';
   static const String description5 = 'You can listen to the Holy Quran Radio through the application for free and easily';
-
+  static const String sthWentWrong = 'Something Went Wrong';
+  static const String tryAgain = 'Try Again';
 }
