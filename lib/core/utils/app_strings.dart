@@ -13,4 +13,11 @@ class AppStrings{
   static const String description5 = 'You can listen to the Holy Quran Radio through the application for free and easily';
   static const String sthWentWrong = 'Something Went Wrong';
   static const String tryAgain = 'Try Again';
+  static const String tasbeh1 = 'سبحان الله';
+  static const String tasbeh2 = 'الحمد لله';
+  static const String tasbeh3 = 'لا إله إلا الله';
+  static const String tasbeh4 = 'الله أكبر';
+  static const String tasbeh5 = 'لا حول ولا قوة إلا بالله';
+  static const String mainTasbeeh = 'سَبِّحِ اسْمَ رَبِّكَ الأعلى';
+
 }
