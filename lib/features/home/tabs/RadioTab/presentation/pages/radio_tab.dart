@@ -6,7 +6,9 @@ import 'package:islami/core/utils/app_strings.dart';
 import 'package:islami/core/utils/app_styles.dart';
 import 'package:islami/features/home/tabs/RadioTab/data/models/RadioResponseModel.dart';
 import 'package:islami/features/home/tabs/RadioTab/data/models/RecitersResponseModel.dart';
+import 'package:islami/features/home/tabs/RadioTab/presentation/pages/sura_list_screen.dart';
 import 'package:islami/features/home/tabs/RadioTab/presentation/widgets/radio_item.dart';
+import 'package:islami/features/home/tabs/RadioTab/presentation/widgets/reciters_names.dart';
 
 class RadioTab extends StatefulWidget {
   const RadioTab({super.key});
@@ -96,38 +98,48 @@ class _RadioTabState extends State<RadioTab> {
                                   itemCount: data.radios!.length);
                             }),
                         FutureBuilder<RecitersResponseModel>(
-                            future: ApiManager.getRecitersData(),
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.waiting) {
-                                return Center(
-                                    child: CircularProgressIndicator(
-                                        color: AppColors.primaryColor));
-                              } else if (snapshot.hasError) {
-                                return Column(
-                                  children: [
-                                    Text(AppStrings.sthWentWrong,
-                                        style: AppStyles.bold20Primary),
-                                    TextButton(
-                                        onPressed: () {
-                                          ApiManager.getRecitersData();
-                                          setState(() {});
-                                        },
-                                        child: Text(AppStrings.tryAgain,
-                                            style: AppStyles.bold20Primary))
-                                  ],
+                          future: ApiManager.getRecitersData(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState == ConnectionState.waiting) {
+                              return Center(
+                                child: CircularProgressIndicator(color: AppColors.primaryColor),
+                              );
+                            } else if (snapshot.hasError) {
+                              return Column(
+                                children: [
+                                  Text(AppStrings.sthWentWrong, style: AppStyles.bold20Primary),
+                                  TextButton(
+                                    onPressed: () {
+                                      ApiManager.getRecitersData();
+                                      setState(() {});
+                                    },
+                                    child: Text(AppStrings.tryAgain, style: AppStyles.bold20Primary),
+                                  ),
+                                ],
+                              );
+                            }
+                            RecitersResponseModel data = snapshot.data!;
+                            return ListView.separated(
+                              separatorBuilder: (context, index) {
+                                return SizedBox(height: height * 0.02);
+                              },
+                              itemBuilder: (context, index) {
+                                return RecitersNames(
+                                  name: data.reciters![index].name ?? '',
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => SuraListScreen(reciter: data.reciters![index]),
+                                      ),
+                                    );
+                                  },
                                 );
-                              }
-                              RecitersResponseModel data = snapshot.data!;
-                              return ListView.separated(
-                                  separatorBuilder: (context, index) {
-                                    return SizedBox(height: height * 0.02);
-                                  },
-                                  itemBuilder: (context, index) {
-                                    return RadioItem(name: data.reciters![index].name??'',url: '${data.reciters![index].moshaf![0].server}112.mp3');
-                                  },
-                                  itemCount: data.reciters!.length);
-                            }),
+                              },
+                              itemCount: data.reciters!.length,
+                            );
+                          },
+                        ),
                       ],
                     ),
                   ),

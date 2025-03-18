@@ -5,9 +5,12 @@ import 'package:islami/core/cache/shared_preference_utils.dart';
 import 'package:islami/features/home/presentation/pages/home_screen.dart';
 import 'package:islami/features/home/tabs/QuranTab/presentation/pages/sura_details/sura_details_screen.dart';
 import 'package:islami/features/home/tabs/HadeethTab/presentation/pages/hadeeth_details/hadeeth_details_screen.dart';
+import 'package:islami/features/home/tabs/RadioTab/data/models/RecitersResponseModel.dart';
 import 'package:islami/features/home/tabs/RadioTab/presentation/manager/radio_provider.dart';
+import 'package:islami/features/home/tabs/RadioTab/presentation/pages/sura_list_screen.dart';
 import 'package:islami/features/on_boarding/presentation/pages/on_boarding_screen.dart';
 import 'package:provider/provider.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SharedPreferenceUtils.init();
@@ -41,6 +44,15 @@ class MyApp extends StatelessWidget {
         AppRoutes.homeRoute: (context) => HomeScreen(),
         AppRoutes.suraDetailsRoute: (context) => SuraDetailsScreen(),
         AppRoutes.hadeethDetailsRoute: (context) => HadeethDetailsScreen(),
+      },
+      onGenerateRoute: (settings) {
+        if (settings.name == AppRoutes.suraListRoute) {
+          final reciter = settings.arguments as Reciters;
+          return MaterialPageRoute(
+            builder: (context) => SuraListScreen(reciter: reciter),
+          );
+        }
+        return null;
       },
     );
   }

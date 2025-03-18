@@ -3,4 +3,6 @@ class AppRoutes{
   static String homeRoute = 'home';
   static String suraDetailsRoute = 'suraDetails';
   static String hadeethDetailsRoute = 'hadeethDetails';
+  static String suraListRoute = 'suraList';
+
 }
