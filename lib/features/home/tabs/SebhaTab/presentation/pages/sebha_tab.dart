@@ -66,7 +66,7 @@ class _SebhaTabState extends State<SebhaTab> {
               padding: EdgeInsets.only(top: height * 0.065),
               child: GestureDetector(
                 onTap: onBodyTap,
-                  child: Image.asset(AppAssets.sebhaBody, height: height * 0.4)),
+                  child: Image.asset(AppAssets.sebhaBody, height: height * 0.39)),
             ),
             Positioned(
               top: height * 0.2,
@@ -81,7 +81,7 @@ class _SebhaTabState extends State<SebhaTab> {
           ],
         ),
         Padding(
-          padding: EdgeInsets.only(top: height*0.01,left: width*0.75),
+          padding: EdgeInsets.only(top: height*0.01,left: width*0.73),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(backgroundColor: AppColors.primaryColor),
                 onPressed: onResetTap, child: Text('Reset',style: AppStyles.bold16PrimaryDark)))
