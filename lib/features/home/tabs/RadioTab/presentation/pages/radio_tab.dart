@@ -7,7 +7,6 @@ import 'package:islami/core/utils/app_styles.dart';
 import 'package:islami/features/home/tabs/RadioTab/data/models/RadioResponseModel.dart';
 import 'package:islami/features/home/tabs/RadioTab/data/models/RecitersResponseModel.dart';
 import 'package:islami/features/home/tabs/RadioTab/presentation/widgets/radio_item.dart';
-import 'package:islami/features/home/tabs/RadioTab/presentation/widgets/reciters_item.dart';
 
 class RadioTab extends StatefulWidget {
   const RadioTab({super.key});
@@ -125,7 +124,7 @@ class _RadioTabState extends State<RadioTab> {
                                     return SizedBox(height: height * 0.02);
                                   },
                                   itemBuilder: (context, index) {
-                                    return RecitersItem();
+                                    return RadioItem(name: data.reciters![index].name??'',url: '${data.reciters![index].moshaf![0].server}112.mp3');
                                   },
                                   itemCount: data.reciters!.length);
                             }),
