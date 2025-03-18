@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:islami/core/utils/app_assets.dart';
 import 'package:islami/core/utils/app_colors.dart';
 import 'package:islami/core/utils/app_styles.dart';
+import 'package:islami/features/home/tabs/RadioTab/presentation/manager/radio_provider.dart';
+import 'package:provider/provider.dart';
 
 class RadioItem extends StatefulWidget {
   String name;
@@ -12,71 +14,72 @@ class RadioItem extends StatefulWidget {
 }
 
 class _RadioItemState extends State<RadioItem> {
-  bool isFavorite = false;
-  bool isPlay = true;
   bool isVolumeUp = true;
 
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
-    return Container(
-      height: height * 0.18,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        color: AppColors.primaryColor,
-      ),
-      child: Stack(
-        children: [
-          isPlay
-              ? Positioned(
+    return Consumer<RadioProvider>(
+      builder: ( context, provider,child) {
+        return Container(
+          height: height * 0.18,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            color: AppColors.primaryColor,
+          ),
+          child: Stack(
+            children: [
+              !provider.isPlaying
+                  ? Positioned(
                   bottom: -5,
                   left: 0,
                   right: 0,
                   child: Image.asset(AppAssets.mosqueBg))
-              : Positioned(
+                  : Positioned(
                   bottom: -28,
                   left: -15,
                   right: -15,
                   child: Image.asset(AppAssets.wavesBg)),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Text(widget.name,
-                  style: AppStyles.bold20PrimaryDark),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  IconButton(
-                      onPressed: () {
-                        isFavorite = !isFavorite;
-                        setState(() {
+                  Text(widget.name,
+                      style: AppStyles.bold20PrimaryDark),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton(
+                          onPressed: () {
+                            provider.play(widget.url);
+                          },
+                          icon: Icon( (provider.currentPlayingUrl == widget.url && provider.isPlaying)?Icons.pause:Icons.play_arrow,
+                              size: 35, color: AppColors.primaryDarkColor)),
+                      IconButton(
+                          onPressed: () {
+                            if(provider.currentPlayingUrl == widget.url){
+                              provider.stop();
+                            }
+                          },
+                          icon: Icon(Icons.stop,
+                              size: 35, color: AppColors.primaryDarkColor)),
+                      IconButton(
+                          onPressed: () {
+                            isVolumeUp = !isVolumeUp;
+                            provider.setVolume(isVolumeUp?2:0);
+                            setState(() {
 
-                        });
-                      },
-                      icon: Icon(isFavorite?Icons.favorite_border:Icons.favorite,
-                          size: 35, color: AppColors.primaryDarkColor)),
-                  IconButton(
-                      onPressed: () {
-                        isPlay = !isPlay;
-                        setState(() {});
-                      },
-                      icon: Icon( isPlay?Icons.play_arrow:Icons.pause,
-                          size: 35, color: AppColors.primaryDarkColor)),
-                  IconButton(
-                      onPressed: () {
-                        isVolumeUp = !isVolumeUp;
-                        setState(() {
-
-                        });
-                      },
-                      icon: Icon(isVolumeUp?Icons.volume_up:Icons.volume_off,
-                          size: 35, color: AppColors.primaryDarkColor))
+                            });
+                          },
+                          icon: Icon(isVolumeUp?Icons.volume_up:Icons.volume_off,
+                              size: 35, color: AppColors.primaryDarkColor))
+                    ],
+                  ),
                 ],
               ),
             ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

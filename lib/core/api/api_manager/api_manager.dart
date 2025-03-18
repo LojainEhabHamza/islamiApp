@@ -6,7 +6,7 @@ import 'package:islami/features/home/tabs/RadioTab/data/models/RecitersResponseM
 class ApiManager{
   static Future<RadioResponseModel>getRadioData()async{
     try{
-      Uri uri = Uri.parse('https://mp3quran.net/api/v3/radios?language=ar');
+      Uri uri = Uri.parse('https://www.mp3quran.net/api/v3/radios?language=ar');
       var response = await http.get(uri);
       var jsonResponse = jsonDecode(response.body);
       return RadioResponseModel.fromJson(jsonResponse);
