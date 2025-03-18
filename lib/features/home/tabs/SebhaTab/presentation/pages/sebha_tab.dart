@@ -63,7 +63,7 @@ class _SebhaTabState extends State<SebhaTab> {
               height: height * 0.07,
             ),
             Padding(
-              padding: EdgeInsets.only(top: height * 0.065),
+              padding: EdgeInsets.only(top: height * 0.068),
               child: GestureDetector(
                 onTap: onBodyTap,
                   child: Image.asset(AppAssets.sebhaBody, height: height * 0.39)),
