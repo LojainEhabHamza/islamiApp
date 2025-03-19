@@ -23,6 +23,7 @@ class _RadioItemState extends State<RadioItem> {
       builder: (context, provider, child) {
         final isCurrentPlaying = provider.isPlayingMap[widget.url] ?? false;
         final isVolumeUp = provider.getVolumeStatus(widget.url);
+        final isPlaying = provider.isPlaying && provider.currentPlayingUrl == widget.url;
 
         return GestureDetector(
           onTap: () {
@@ -36,7 +37,7 @@ class _RadioItemState extends State<RadioItem> {
             ),
             child: Stack(
               children: [
-                if (isCurrentPlaying)
+                if (isPlaying)
                   Positioned(
                     bottom: -28,
                     left: -15,
@@ -62,9 +63,7 @@ class _RadioItemState extends State<RadioItem> {
                             provider.play(widget.url);
                           },
                           icon: Icon(
-                            (provider.currentPlayingUrl == widget.url && provider.isPlaying)
-                                ? Icons.pause
-                                : Icons.play_arrow,
+                            isPlaying ? Icons.pause : Icons.play_arrow,
                             size: 35,
                             color: AppColors.primaryDarkColor,
                           ),

@@ -36,6 +36,7 @@ class _SuraListScreenState extends State<SuraListScreen> {
             builder: (context, provider, child) {
               final isCurrentPlaying = provider.isPlayingMap[url] ?? false;
               final isVolumeUp = provider.getVolumeStatus(url);
+              final isPlaying = provider.isPlaying && provider.currentPlayingUrl == url;
 
               return GestureDetector(
                 onTap: () {
@@ -49,7 +50,7 @@ class _SuraListScreenState extends State<SuraListScreen> {
                   ),
                   child: Stack(
                     children: [
-                      if (isCurrentPlaying)
+                      if (isPlaying)
                         Positioned(
                           bottom: -28,
                           left: -15,
@@ -75,9 +76,7 @@ class _SuraListScreenState extends State<SuraListScreen> {
                                   provider.play(url);
                                 },
                                 icon: Icon(
-                                  (provider.currentPlayingUrl == url && provider.isPlaying)
-                                      ? Icons.pause
-                                      : Icons.play_arrow,
+                                  isPlaying ? Icons.pause : Icons.play_arrow,
                                   size: 35,
                                   color: AppColors.primaryDarkColor,
                                 ),
