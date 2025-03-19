@@ -2,7 +2,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
 class RadioProvider with ChangeNotifier {
-  final AudioPlayer _audioPlayer = AudioPlayer();
+  final AudioPlayer audioPlayer = AudioPlayer();
   bool isPlaying = false;
   String? currentPlayingUrl;
   Map<String, bool> isPlayingMap = {};
@@ -10,13 +10,13 @@ class RadioProvider with ChangeNotifier {
 
   Future<void> play(String url) async {
     if (currentPlayingUrl == url && isPlaying) {
-      await _audioPlayer.pause();
+      await audioPlayer.pause();
       isPlaying = false;
     } else {
       if (currentPlayingUrl != null) {
-        await _audioPlayer.stop();
+        await audioPlayer.stop();
       }
-      await _audioPlayer.play(UrlSource(url));
+      await audioPlayer.play(UrlSource(url));
       currentPlayingUrl = url;
       isPlaying = true;
       isPlayingMap[url] = true;
@@ -25,7 +25,7 @@ class RadioProvider with ChangeNotifier {
   }
 
   Future<void> stop() async {
-    await _audioPlayer.stop();
+    await audioPlayer.stop();
     isPlaying = false;
     currentPlayingUrl = null;
     notifyListeners();
@@ -33,7 +33,9 @@ class RadioProvider with ChangeNotifier {
 
   Future<void> setVolume(String url, bool isVolumeUp) async {
     isVolumeUpMap[url] = isVolumeUp;
-    await _audioPlayer.setVolume(isVolumeUp ? 1.0 : 0.0);
+    if (currentPlayingUrl == url) {
+      await audioPlayer.setVolume(isVolumeUp ? 2.0 : 0.0);
+    }
     notifyListeners();
   }
 

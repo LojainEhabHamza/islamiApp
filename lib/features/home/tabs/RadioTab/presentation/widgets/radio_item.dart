@@ -36,19 +36,19 @@ class _RadioItemState extends State<RadioItem> {
             ),
             child: Stack(
               children: [
-                if (!isCurrentPlaying)
-                  Positioned(
-                    bottom: -5,
-                    left: 0,
-                    right: 0,
-                    child: Image.asset(AppAssets.mosqueBg),
-                  )
-                else
+                if (isCurrentPlaying)
                   Positioned(
                     bottom: -28,
                     left: -15,
                     right: -15,
                     child: Image.asset(AppAssets.wavesBg),
+                  )
+                else
+                  Positioned(
+                    bottom: -5,
+                    left: 0,
+                    right: 0,
+                    child: Image.asset(AppAssets.mosqueBg),
                   ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
