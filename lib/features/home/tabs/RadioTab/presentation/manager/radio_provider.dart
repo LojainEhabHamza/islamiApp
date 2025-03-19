@@ -47,12 +47,10 @@ class RadioProvider with ChangeNotifier {
 
     if (currentPlayingUrl == url) {
       if (isVolumeUp) {
-        // عند unmute، نعيد الصوت إلى القيمة السابقة
         double restoredVolume = previousVolumeMap[url] ?? 1.0;
         await audioPlayer.setVolume(restoredVolume);
       } else {
-        // عند mute، نحفظ القيمة الحالية للصوت ونضبطه على 0.0
-        previousVolumeMap[url] = audioPlayer.volume; // حفظ قيمة الصوت الحالية
+        previousVolumeMap[url] = audioPlayer.volume;
         await audioPlayer.setVolume(0.0);
       }
     }
@@ -61,6 +59,6 @@ class RadioProvider with ChangeNotifier {
   }
 
   bool getVolumeStatus(String url) {
-    return isVolumeUpMap[url] ?? true; // القيمة الافتراضية هي true (الصوت يعمل)
+    return isVolumeUpMap[url] ?? true;
   }
 }
