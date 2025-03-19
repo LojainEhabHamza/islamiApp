@@ -16,15 +16,13 @@ class SuraListScreen extends StatefulWidget {
 }
 
 class _SuraListScreenState extends State<SuraListScreen> {
-  bool isVolumeUp = true;
-
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: AppColors.primaryDarkColor,
       appBar: AppBar(
-        title: Text(widget.reciter.name ?? '',style: AppStyles.bold20Primary),
+        title: Text(widget.reciter.name ?? '', style: AppStyles.bold20Primary),
       ),
       body: ListView.separated(
         separatorBuilder: (context, index) {
@@ -34,14 +32,16 @@ class _SuraListScreenState extends State<SuraListScreen> {
           final surahNumber = index + 1;
           final url = '${widget.reciter.moshaf![0].server}$surahNumber.mp3';
 
-          return GestureDetector(
-            onTap: () {
-              final provider = Provider.of<RadioProvider>(context, listen: false);
-              provider.play(url);
-            },
-            child: Consumer<RadioProvider>(
-              builder: (context,provider,child){
-                return Container(
+          return Consumer<RadioProvider>(
+            builder: (context, provider, child) {
+              final isCurrentPlaying = provider.isPlayingMap[url] ?? false;
+              final isVolumeUp = provider.getVolumeStatus(url);
+
+              return GestureDetector(
+                onTap: () {
+                  provider.play(url);
+                },
+                child: Container(
                   height: height * 0.18,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(16),
@@ -49,58 +49,70 @@ class _SuraListScreenState extends State<SuraListScreen> {
                   ),
                   child: Stack(
                     children: [
-                      !provider.isPlaying
-                          ? Positioned(
+                      if (!isCurrentPlaying)
+                        Positioned(
                           bottom: -5,
                           left: 0,
                           right: 0,
-                          child: Image.asset(AppAssets.mosqueBg))
-                          : Positioned(
+                          child: Image.asset(AppAssets.mosqueBg),
+                        )
+                      else
+                        Positioned(
                           bottom: -28,
                           left: -15,
                           right: -15,
-                          child: Image.asset(AppAssets.wavesBg)),
+                          child: Image.asset(AppAssets.wavesBg),
+                        ),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Text('سورة $surahNumber',
-                              style: AppStyles.bold20PrimaryDark),
+                          Text('سورة $surahNumber', style: AppStyles.bold20PrimaryDark),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               IconButton(
-                                  onPressed: () {
-                                    provider.play('${widget.reciter.moshaf![0].server}$surahNumber.mp3');
-                                  },
-                                  icon: Icon( (provider.currentPlayingUrl == url && provider.isPlaying)?Icons.pause:Icons.play_arrow,
-                                      size: 35, color: AppColors.primaryDarkColor)),
+                                onPressed: () {
+                                  provider.play(url);
+                                },
+                                icon: Icon(
+                                  (provider.currentPlayingUrl == url && provider.isPlaying)
+                                      ? Icons.pause
+                                      : Icons.play_arrow,
+                                  size: 35,
+                                  color: AppColors.primaryDarkColor,
+                                ),
+                              ),
                               IconButton(
-                                  onPressed: () {
-                                    if(provider.currentPlayingUrl == url){
-                                      provider.stop();
-                                    }
-                                  },
-                                  icon: Icon(Icons.stop,
-                                      size: 35, color: AppColors.primaryDarkColor)),
+                                onPressed: () {
+                                  if (provider.currentPlayingUrl == url) {
+                                    provider.stop();
+                                  }
+                                },
+                                icon: Icon(
+                                  Icons.stop,
+                                  size: 35,
+                                  color: AppColors.primaryDarkColor,
+                                ),
+                              ),
                               IconButton(
-                                  onPressed: () {
-                                    isVolumeUp = !isVolumeUp;
-                                    provider.setVolume(isVolumeUp?2:0);
-                                    setState(() {
-
-                                    });
-                                  },
-                                  icon: Icon(isVolumeUp?Icons.volume_up:Icons.volume_off,
-                                      size: 35, color: AppColors.primaryDarkColor))
+                                onPressed: () {
+                                  provider.setVolume(url, !isVolumeUp); // تغيير حالة الصوت للرابط الحالي
+                                },
+                                icon: Icon(
+                                  isVolumeUp ? Icons.volume_up : Icons.volume_off,
+                                  size: 35,
+                                  color: AppColors.primaryDarkColor,
+                                ),
+                              ),
                             ],
                           ),
                         ],
                       ),
                     ],
                   ),
-                );
-              },
-            ),
+                ),
+              );
+            },
           );
         },
         itemCount: widget.reciter.moshaf![0].surahTotal?.toInt() ?? 0,
