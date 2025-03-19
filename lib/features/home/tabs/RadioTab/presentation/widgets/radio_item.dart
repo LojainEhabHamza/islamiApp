@@ -83,7 +83,7 @@ class _RadioItemState extends State<RadioItem> {
                         ),
                         IconButton(
                           onPressed: () {
-                            provider.setVolume(widget.url, !isVolumeUp); // تغيير حالة الصوت للرابط الحالي
+                            provider.setVolume(widget.url, !isVolumeUp);
                           },
                           icon: Icon(
                             isVolumeUp ? Icons.volume_up : Icons.volume_off,

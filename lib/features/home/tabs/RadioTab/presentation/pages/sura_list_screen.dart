@@ -96,7 +96,7 @@ class _SuraListScreenState extends State<SuraListScreen> {
                               ),
                               IconButton(
                                 onPressed: () {
-                                  provider.setVolume(url, !isVolumeUp); // تغيير حالة الصوت للرابط الحالي
+                                  provider.setVolume(url, !isVolumeUp);
                                 },
                                 icon: Icon(
                                   isVolumeUp ? Icons.volume_up : Icons.volume_off,
