@@ -14,6 +14,7 @@ class SebhaTab extends StatefulWidget {
 class _SebhaTabState extends State<SebhaTab> {
   int counter = 1;
   int index = 0;
+  double angle = 0;
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
@@ -33,6 +34,7 @@ class _SebhaTabState extends State<SebhaTab> {
       if(index == azkar.length){
         index = 0;
       }
+      angle += 360/33;
       setState(() {
 
       });
@@ -66,15 +68,17 @@ class _SebhaTabState extends State<SebhaTab> {
               padding: EdgeInsets.only(top: height * 0.068),
               child: GestureDetector(
                 onTap: onBodyTap,
-                  child: Image.asset(AppAssets.sebhaBody, height: height * 0.39)),
+                  child: Transform.rotate(
+                      angle: angle,
+                      child: Image.asset(AppAssets.sebhaBody, height: height * 0.39))),
             ),
             Positioned(
-              top: height * 0.2,
+              top: height * 0.22,
               child: Column(
                 children: [
-                  Text(azkar[index], style: AppStyles.bold32White),
+                  Text(azkar[index], style: AppStyles.bold26White),
                   SizedBox(height: height * 0.01),
-                  Text('$counter', style: AppStyles.bold32White)
+                  Text('$counter', style: AppStyles.bold26White)
                 ],
               ),
             ),
@@ -84,7 +88,8 @@ class _SebhaTabState extends State<SebhaTab> {
           padding: EdgeInsets.only(top: height*0.01,left: width*0.73),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(backgroundColor: AppColors.primaryColor),
-                onPressed: onResetTap, child: Text('Reset',style: AppStyles.bold16PrimaryDark)))
+                onPressed: onResetTap, child: Text('Reset',style: AppStyles.bold16PrimaryDark))
+        )
       ],
     );
   }
