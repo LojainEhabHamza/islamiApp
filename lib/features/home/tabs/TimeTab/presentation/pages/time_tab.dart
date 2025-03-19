@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:islami/core/utils/app_assets.dart';
+import 'package:islami/core/utils/app_constants.dart';
 import 'package:islami/core/utils/app_styles.dart';
 
 class TimeTab extends StatelessWidget {
@@ -28,7 +29,7 @@ class TimeTab extends StatelessWidget {
               children: [
                 Image.asset(AppAssets.prayerTime),
                 SizedBox(height: height*0.02),
-                Text('Azkar', style: AppStyles.bold16White),
+                Text(AppConstants.azkar, style: AppStyles.bold16White),
                 SizedBox(height: height*0.02),
                 Row(
                   children: [
@@ -36,7 +37,8 @@ class TimeTab extends StatelessWidget {
                     SizedBox(width: width*0.03),
                     Expanded(child: Image.asset(AppAssets.eveningAzkar))
                   ],
-                )
+                ),
+                SizedBox(height: height*0.025),
               ],
             )
           ],
