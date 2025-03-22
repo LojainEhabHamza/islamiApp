@@ -34,5 +34,6 @@ class AppAssets{
   static const String quranHadeethBg = 'assets/images/quranHadeethFrame.png';
   static const String prayerTime = 'assets/images/prayerTime.png';
   static const String hadeethFrame = 'assets/images/hadeethFrame.png';
+  static const String prayerTimeBg = 'assets/images/prayerTimeBg.png';
 
 }
