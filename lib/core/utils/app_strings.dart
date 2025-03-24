@@ -20,5 +20,5 @@ class AppStrings{
   static const String tasbeh5 = 'لا حول ولا قوة إلا بالله';
   static const String mainTasbeeh = 'سَبِّحِ اسْمَ رَبِّكَ الأعلى';
   static const String prayTime = 'Pray Time';
-
+  static const String nthToShow = 'Nothing To Show';
 }

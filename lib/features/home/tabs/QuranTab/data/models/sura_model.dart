@@ -351,6 +351,7 @@ class SuraModel{
     '5',
     '6'
   ];
+  static List<SuraModel> suraList = [];
   SuraModel({required this.suraArName,required this.suraEnName,required this.numVerses,required this.index});
   static SuraModel getSuraModel(int index){
     return SuraModel(
