@@ -21,4 +21,13 @@ class AppStrings{
   static const String mainTasbeeh = 'سَبِّحِ اسْمَ رَبِّكَ الأعلى';
   static const String prayTime = 'Pray Time';
   static const String nthToShow = 'Nothing To Show';
+  static const String azkar1 = 'أذكار الصباح';
+  static const String azkar2 = 'أذكار المساء';
+  static const String azkar3 = 'أذكار بعد السلام من الصلاة المفروضة';
+  static const String azkar4 = 'تسابيح';
+  static const String azkar5 = 'أذكار النوم';
+  static const String azkar6 = 'أذكار الاستيقاظ';
+  static const String azkar7 = 'أدعية قرآنية';
+  static const String azkar8 = 'أدعية الأنبياء';
+  static const String azkarNotFound = 'Azkar Not Found';
 }

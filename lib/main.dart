@@ -8,6 +8,8 @@ import 'package:islami/features/home/tabs/HadeethTab/presentation/pages/hadeeth_
 import 'package:islami/features/home/tabs/RadioTab/data/models/RecitersResponseModel.dart';
 import 'package:islami/features/home/tabs/RadioTab/presentation/manager/radio_provider.dart';
 import 'package:islami/features/home/tabs/RadioTab/presentation/pages/sura_list_screen.dart';
+import 'package:islami/features/home/tabs/TimeTab/presentation/manager/azkar_provider.dart';
+import 'package:islami/features/home/tabs/TimeTab/presentation/pages/azkar_details_screen.dart';
 import 'package:islami/features/on_boarding/presentation/pages/on_boarding_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -22,6 +24,8 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => RadioProvider()),
+        ChangeNotifierProvider(create: (context) => AzkarProvider()),
+
       ],
       child: MyApp(initialRoute: initialRoute),
     ),
@@ -44,6 +48,7 @@ class MyApp extends StatelessWidget {
         AppRoutes.homeRoute: (context) => HomeScreen(),
         AppRoutes.suraDetailsRoute: (context) => SuraDetailsScreen(),
         AppRoutes.hadeethDetailsRoute: (context) => HadeethDetailsScreen(),
+        AppRoutes.azkarDetailsRoute: (context) => AzkarDetailsScreen(),
       },
       onGenerateRoute: (settings) {
         if (settings.name == AppRoutes.suraListRoute) {
