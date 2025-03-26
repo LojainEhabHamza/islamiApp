@@ -21,32 +21,49 @@ class MostRecentSuraWidget extends StatelessWidget {
         color: AppColors.primaryColor,
         borderRadius: BorderRadius.circular(20),
       ),
-      child: lastSura.isNotEmpty
-          ? Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(lastSura['suraEnName'] ?? '',
-                  style: AppStyles.bold24PrimaryDark),
-              SizedBox(height: height * 0.01),
-              Text(lastSura['suraArName'] ?? '',
-                  style: AppStyles.bold24PrimaryDark),
-              SizedBox(height: height * 0.01),
-              Text('${lastSura['numVerses'] ?? ''} Verses',
-                  style: AppStyles.bold14PrimaryDark),
-            ],
-          ),
-          Image.asset(AppAssets.mostRecentSura)
-        ],
-      )
-          : Center(
+      child: _buildContent(height),
+    );
+  }
+
+  Widget _buildContent(double height) {
+    bool hasData = (lastSura['suraEnName']?.isNotEmpty ?? false) ||
+        (lastSura['suraArName']?.isNotEmpty ?? false) ||
+        (lastSura['numVerses']?.isNotEmpty ?? false);
+
+    if (!hasData) {
+      return Center(
         child: Text(
           AppStrings.nthToShow,
           style: AppStyles.bold24PrimaryDark,
         ),
-      ),
+      );
+    }
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (lastSura['suraEnName']?.isNotEmpty ?? false)
+              Text(lastSura['suraEnName']!,
+                  style: AppStyles.bold24PrimaryDark),
+            if (lastSura['suraEnName']?.isNotEmpty ?? false)
+              SizedBox(height: height * 0.01),
+            if (lastSura['suraArName']?.isNotEmpty ?? false)
+              Text(lastSura['suraArName']!,
+                  style: AppStyles.bold24PrimaryDark),
+            if (lastSura['suraArName']?.isNotEmpty ?? false)
+              SizedBox(height: height * 0.01),
+            if (lastSura['numVerses']?.isNotEmpty ?? false)
+              Text(
+                '${lastSura['numVerses']} Verses',
+                style: AppStyles.bold14PrimaryDark,
+              ),
+          ],
+        ),
+        Image.asset(AppAssets.mostRecentSura)
+      ],
     );
   }
 }
