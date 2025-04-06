@@ -87,7 +87,7 @@ class _TimeTabState extends State<TimeTab> {
                             alignment: Alignment.center,
                             children: [
                               Positioned(
-                                  top: 18,
+                                  top: 30,
                                   left: 0,
                                   right: 0,
                                   bottom: 0,
