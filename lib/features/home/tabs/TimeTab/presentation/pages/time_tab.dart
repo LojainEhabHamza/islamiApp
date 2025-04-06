@@ -8,7 +8,6 @@ import 'package:islami/core/utils/app_constants.dart';
 import 'package:islami/core/utils/app_strings.dart';
 import 'package:islami/core/utils/app_styles.dart';
 import 'package:islami/core/utils/date_utils.dart';
-import 'package:islami/features/home/tabs/TimeTab/data/models/AzkarModel.dart';
 import 'package:islami/features/home/tabs/TimeTab/data/models/PrayerResponseModel.dart';
 import 'package:islami/features/home/tabs/TimeTab/presentation/widgets/azkar_tab_item.dart';
 
